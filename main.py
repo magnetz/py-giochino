@@ -25,6 +25,7 @@ def main():
     size = (320, 320)
     black = (0, 0, 0)
     white = (255, 255, 255)
+    red = (255, 0, 0)
 
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Giochino')
@@ -47,7 +48,7 @@ def main():
         screen.blit(game_start, (10, 10))
 
         text_myfont = pygame.font.SysFont('ubuntu', 20)
-        game_text = text_myfont.render('Press <SPACE> and play else press <ESC>', False, white)
+        game_text = text_myfont.render('Press <SPACE> and play!', False, white)
         screen.blit(game_text, (10, 40))
 
         keys=pygame.key.get_pressed()
@@ -99,12 +100,17 @@ def main():
         screen.fill(black)
 
         over_myfont = pygame.font.SysFont('ubuntu', 30)
-        game_over = over_myfont.render('Game Over!', False, white)
+        game_over = over_myfont.render('Game Over!', False, red)
         screen.blit(game_over, (10, 10))
 
         text_myfont = pygame.font.SysFont('ubuntu', 20)
-        game_text = text_myfont.render('Reload with <SPACE> else press <ESC>', False, white)
+        game_text = text_myfont.render('Reload with <SPACE>', False, white)
         screen.blit(game_text, (10, 40))
+
+        score_text = text_myfont.render(('Highscore: %(max_score)s' % {"max_score": max_score}), False, white)
+        speed_text = text_myfont.render(('Max speed: %(max_speed)s' % {"max_speed": max_speed}), False, white)
+        screen.blit(score_text, (10, 60))
+        screen.blit(speed_text, (10, 80))
 
         keys=pygame.key.get_pressed()
 
