@@ -15,14 +15,14 @@ def main():
     myfont = pygame.font.SysFont('ubuntu', 15)
 
 
-    size = (320, 240)
+    size = (320, 320)
     black = (0, 0, 0)
     white = (255, 255, 255)
 
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption('Giochino')
     
-    p = player.Player(screen, 10,30,10,10,(255,0,0),10)
+    p = player.Player(screen, 10,40,10,10,(255,0,0),2)
     po = point.Point(screen, 5,5,5,5,(255,255,255))
     po.recollocate()
 
@@ -37,11 +37,16 @@ def main():
 
         p.draw()
         p.move()
+        if p.wall_collision() :
+                collision = 0
+                screen.fill((255,0,0))
 
         collision_check(p, po)
 
-        textsurface = myfont.render("Point: {0}".format(collision), False, white)
-        screen.blit(textsurface,(10,10))
+        point_text = myfont.render("Point: {0}".format(collision), False, white)
+        speed_text = myfont.render("Speed: {0}".format(p.vel), False, white)
+        screen.blit(point_text,(10,10))
+        screen.blit(speed_text,(10,20))
         
         pygame.display.update()
         
@@ -53,5 +58,7 @@ def collision_check(player, point):
         if player.y + player.h > point.y and player.y < point.y + point.h:
             collision += 1
             point.recollocate()
+            new_speed = player.vel + 2
+            player.accellerate(new_speed)
 
 if __name__ == '__main__': main()
