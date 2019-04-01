@@ -9,6 +9,7 @@ def main():
     global collision
 
     pygame.init()
+    clock = pygame.time.Clock()
 
     pygame.font.init()
     myfont = pygame.font.SysFont('ubuntu', 15)
@@ -43,6 +44,8 @@ def main():
         screen.blit(textsurface,(10,10))
         
         pygame.display.update()
+        
+        clock.tick(60)
 
 def collision_check(player, point):
     global collision
