@@ -15,5 +15,5 @@ class Point (object):
         pygame.draw.rect(self.screen, self.color, rect)
 
     def recollocate(self):
-        self.x = random.randint(0, pygame.display.get_surface().get_width() - self.w)
-        self.y = random.randint(0 + 30, pygame.display.get_surface().get_height() - self.h)
+        self.x = random.randint(0 + 30, pygame.display.get_surface().get_width() - self.w - 30)
+        self.y = random.randint(0 + 30, pygame.display.get_surface().get_height() - self.h - 30)
