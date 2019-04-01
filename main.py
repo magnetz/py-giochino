@@ -4,9 +4,10 @@ import pygame, sys, player, point
 from pygame.locals import *
 
 collision = 0
+max_collision = 0
 
 def main():
-    global collision
+    global collision, max_collision
 
     pygame.init()
     clock = pygame.time.Clock()
@@ -43,8 +44,10 @@ def main():
 
         collision_check(p, po)
 
-        point_text = myfont.render("Point: {0}".format(collision), False, white)
-        speed_text = myfont.render("Speed: {0}".format(p.vel), False, white)
+        #point_text = myfont.render("Point: {0} Highscore: {1}".format(collision).format(max_collision), False, white)
+        point_text = myfont.render(('Point: %(point)s Highscore: %(max_point)s' %  {"point": collision, "max_point": max_collision}), False, white)
+        #speed_text = myfont.render("Speed: {0} Max speed: {1}".format(p.vel).format(p.initialVel + (collision * 2)), False, white)
+        speed_text = myfont.render(('Speed: %(speed)s Max speed: %(max_speed)s' %  {"speed": p.vel, "max_speed": p.initialVel + (max_collision * 2)}), False, white)
         screen.blit(point_text,(10,10))
         screen.blit(speed_text,(10,20))
         
@@ -53,10 +56,14 @@ def main():
         clock.tick(60)
 
 def collision_check(player, point):
-    global collision
+    global collision, max_collision
     if player.x + player.w > point.x and player.x < point.x + point.w:
         if player.y + player.h > point.y and player.y < point.y + point.h:
             collision += 1
+
+            if collision > max_collision:
+                max_collision = collision
+
             point.recollocate()
             new_speed = player.vel + 2
             player.accellerate(new_speed)
